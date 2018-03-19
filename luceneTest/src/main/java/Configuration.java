@@ -8,5 +8,7 @@ public class Configuration {
     public static final String Fr94_File_Path= "/Users/pengyuzhou/Desktop/Assignment Two/fr94";
     public static final String Ft_File_Path= "/Users/pengyuzhou/Desktop/Assignment Two/ft";
     public static final String Latimes_File_Path= "/Users/pengyuzhou/Desktop/Assignment Two/latimes";
+    public static final String Queries_File_Path= "/Users/pengyuzhou/Desktop/CS7IS3-Assignment2-Topics";
+
 
 }
