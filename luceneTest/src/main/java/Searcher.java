@@ -19,7 +19,7 @@ public class Searcher {
 
     public void readIndex(int index){
         try{
-            DirectoryReader reader =  DirectoryReader.open(FSDirectory.open(Configuration.Index_Path));
+            DirectoryReader reader =  DirectoryReader.open(FSDirectory.open(Configuration.INDEX_PATH));
             searcher = new IndexSearcher(reader);
             if (index == 1){
                 searcher.setSimilarity(new BM25Similarity());
@@ -32,7 +32,7 @@ public class Searcher {
         }
     }
     public ArrayList<Integer> search(String queryStr, int num){
-        String[] a = {"DocId","Title","DocumentRelevantInfo","Content"};
+        String[] a = {"queryId","Title","description","Narrative"};
         QueryParser parser = new MultiFieldQueryParser(a,analyzer);
         ArrayList<Integer> ids = new ArrayList<>();
         try{

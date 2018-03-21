@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class FR94DocumentParser {
-    public void readfile(ArrayList<String> filePaths){
+    public void readfile(ArrayList<String> filePaths, IndexWriter writer){
     //public ArrayList<DocumentCollection> readfile(){
         try{
 
@@ -42,26 +42,21 @@ public class FR94DocumentParser {
                     doc1.Content = Text.text();
                     DocAarray.add(doc1);
                 }
-                IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
-                config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
-                Directory dir = FSDirectory.open(Configuration.Index_Path);
-                IndexWriter writer = new IndexWriter(dir,config);
 
                 Iterator<DocumentCollection> iter = DocAarray.iterator();
                 while(iter.hasNext()) {
                     DocumentCollection o = iter.next();
                     org.apache.lucene.document.Document doc1 = new org.apache.lucene.document.Document();
-                    StringField docidfield = new StringField("docid", o.DocId, Field.Store.YES);
-                    TextField titlefield = new TextField("title", o.Title, Field.Store.YES);
-                    TextField docrelevantfield = new TextField("relevantinfo", o.DocumentRelevantInfo, Field.Store.YES);
-                    TextField contentfield = new TextField("content", o.Content, Field.Store.YES);
+                    TextField docidfield = new TextField("DocId", o.DocId, Field.Store.YES);
+                    TextField titlefield = new TextField("Title", o.Title, Field.Store.NO);
+                    TextField docrelevantfield = new TextField("DocumentRelevantInfo", o.DocumentRelevantInfo, Field.Store.NO);
+                    TextField contentfield = new TextField("Content", o.Content, Field.Store.NO);
                     doc1.add(docidfield);
                     doc1.add(titlefield);
                     doc1.add(docrelevantfield);
                     doc1.add(contentfield);
                     writer.addDocument(doc1);
                 }
-                writer.close();
                 sum+=counter;
             }
             System.out.println("Total processed FR94 doc number: "+ sum);
