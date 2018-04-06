@@ -20,9 +20,9 @@ public class TopicParser {
                 Elements Narrative = el.getElementsByTag("narr");
 
                 documentQuery.queryId = QueryId.text().split(" ")[1];
-                documentQuery.Title = Title.text();
-                documentQuery.description = Desc.text().split("Narrative")[0];
-                documentQuery.Narrative = Narrative.text();
+                documentQuery.Title = Title.text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                documentQuery.description = Desc.text().split("Narrative")[0].replace("Description:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                documentQuery.Narrative = Narrative.text().replace("Narrative:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
                 QueryArray.add(documentQuery);
 
             }

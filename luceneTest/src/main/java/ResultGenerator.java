@@ -1,11 +1,14 @@
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.core.StopAnalyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.standard.ClassicAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.similarities.BM25Similarity;
+import org.apache.lucene.search.similarities.*;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.search.Query;
 
@@ -37,13 +40,13 @@ public class ResultGenerator {
 
             for (DocumentQuery documentQuery: documentQueries) {
                 QueryParser parser = new MultiFieldQueryParser(fields, analyzer);
-                Query query = parser.parse(documentQuery.Title+" "+documentQuery.description);
+                String queryString = parser.escape(documentQuery.Title+" "+documentQuery.Title+" "+documentQuery.Title+" "+documentQuery.description+" "+documentQuery.description+" "+documentQuery.Narrative);
+                Query query = parser.parse(queryString);
                 ScoreDoc[] hits = searcher.search(query, NUM_TOP_HITS).scoreDocs;
-
                 for (ScoreDoc hit: hits) {
                     Document hitDoc = searcher.doc(hit.doc);
-                    String line = String.format("%s 0 %s 1\n",
-                            documentQuery.queryId, hitDoc.get("DocId"));
+                    String line = String.format("%s Q0 %s 0 %f STANDARD\n",
+                            documentQuery.queryId, hitDoc.get("DocId"), hit.score);
                     bufferedWriter.write(line);
                 }
             }

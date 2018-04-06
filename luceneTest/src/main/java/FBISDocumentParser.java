@@ -34,32 +34,19 @@ public class FBISDocumentParser {
                     counter++;
                     DocumentCollection doc1 = new DocumentCollection();
                     Elements DOCID = el.getElementsByTag("DOCNO");
-                    Elements DocumentRelevantInfo = el.getElementsByTag("DATE1");
+//                    Elements DocumentRelevantInfo = el.getElementsByTag("DATE1");
                     Elements Title = el.getElementsByTag("TI");
                     Elements Text = el.getElementsByTag("TEXT");
 
                     doc1.DocId = DOCID.text();
-                    doc1.DocumentRelevantInfo = DocumentRelevantInfo.text();
-                    doc1.Title = Title.text();
-                    doc1.Content = Text.text();
+//                    doc1.DocumentRelevantInfo = DocumentRelevantInfo.text();
+//                    doc1.DocumentRelevantInfo = "";
+                    doc1.Title = Title.text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                    doc1.Content = Text.text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
                     DocAarray.add(doc1);
                 }
-
-
-                Iterator<DocumentCollection> iter = DocAarray.iterator();
-                while(iter.hasNext()) {
-                    DocumentCollection o = iter.next();
-                    org.apache.lucene.document.Document doc1 = new org.apache.lucene.document.Document();
-                    TextField docidfield = new TextField("DocId", o.DocId, Field.Store.YES);
-                    TextField titlefield = new TextField("Title", o.Title, Field.Store.NO);
-                    TextField docrelevantfield = new TextField("DocumentRelevantInfo", o.DocumentRelevantInfo, Field.Store.NO);
-                    TextField contentfield = new TextField("Content", o.Content, Field.Store.NO);
-                    doc1.add(docidfield);
-                    doc1.add(titlefield);
-                    doc1.add(docrelevantfield);
-                    doc1.add(contentfield);
-                    writer.addDocument(doc1);
-                }
+                IndexIterator indexIterator = new IndexIterator();
+                indexIterator.IteratorIndexAdder(DocAarray,writer);
                 sum+=counter;
             }
             System.out.println("Total processed FBIS doc number: "+ sum);
