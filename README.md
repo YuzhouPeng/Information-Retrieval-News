@@ -31,22 +31,39 @@ Retrieval Model
 The retrieval model used can significantly impact the performance of your search engine. You should experiment with a variety of retrieval models to identify which performs best for this collection and these topics. You should also consider if the retrieval models could be extended in any way to improve the performance of your search engine for this content. 
 
 Information about the project and instruction of running project.
+
 Configuration.java: Including the paths of data files, query files and index files.
+
 DocumentCollection.java: Document Class of four kinds of document.
+
 DocumentCollectionReader: Read DocumentCollections and add them to parser.
+
 DocumentQuery.java: Query Class.
 
+
 We have four different parser of documents:
+
 1.FBISDocumentParser.java
+
 2.FR94DocumentParser.java
+
 3.FTDocumentParser.java
+
 4.LATIMESDocumentParser.java
 
+
 IndexIterator.java: For the iteration of generation index.
+
 Main.java: Main function.
+
 ResultGenerator.java: Generate results file for trec_eval format. The result file is in luceneTest/files/
+
 TopicParser.java: Parse Topics and form queries.
 
+
 Run project:
-1. Use "gradle build" to build the project
+
+1. Use "gradle build" to build the project.
+
 2. Use "gradle run" to get result.
+
