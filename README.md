@@ -67,3 +67,9 @@ Run project:
 
 2. Use "gradle run" to get result.
 
+Deploy it in AWS:
+
+1. Clone the project on AWS.
+
+2. Use 'gradle build', 'gradle run' to exectue the program.
+
