@@ -1,4 +1,4 @@
-# Lucene-Project
+# Information Retrieval of News Documents based on Apache Lucene
 The task is to use Lucene to index and search a specific collection of documents. 
 
 Content
